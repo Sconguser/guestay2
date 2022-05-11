@@ -35,8 +35,10 @@ class HotelSearchView extends StatelessWidget {
             _pickedDates(context),
             SizedBox(height: 20),
             _pickedGuests(context),
-            SizedBox(height: 100),
-            _debugButton(context)
+            // SizedBox(height: 100),
+            // _debugButton(context),
+            SizedBox(height: 20),
+            _hotelViewButton(context),
           ],
         ),
       ),
@@ -167,6 +169,32 @@ class HotelSearchView extends StatelessWidget {
     } else {
       return SizedBox(height: 0);
     }
+  }
+
+  Widget _hotelViewButton(BuildContext context) {
+    HotelSearchRepository hotelSearchRepository =
+        context.read<HotelSearchRepository>();
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: SizedBox(
+        width: 400,
+        height: 50,
+        child: ElevatedButton(
+            style:
+                ElevatedButton.styleFrom(primary: primaryColor, elevation: 0),
+            onPressed: () {
+              _hotelViewButtonPressed(context);
+            },
+            child: Text(
+              'Search',
+              style: TextStyle(color: Colors.black),
+            )),
+      ),
+    );
+  }
+
+  void _hotelViewButtonPressed(BuildContext context) {
+    context.read<HotelSearchNavigatorCubit>().showHotelListView();
   }
 
   Widget _pickedGuests(BuildContext context) {

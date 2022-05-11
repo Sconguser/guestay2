@@ -2,7 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guestay/date_picker/date_picker_cubit.dart';
 import 'package:guestay/hotel_search/hotel_search_repository.dart';
 
-enum HotelSearchNavigatorState { defaultView, guestPicker, datepicker }
+enum HotelSearchNavigatorState {
+  defaultView,
+  guestPicker,
+  datepicker,
+  hotelListView
+}
 
 class HotelSearchNavigatorCubit extends Cubit<HotelSearchNavigatorState> {
   final HotelSearchRepository hotelSearchRepository;
@@ -29,4 +34,5 @@ class HotelSearchNavigatorCubit extends Cubit<HotelSearchNavigatorState> {
   void showGuestPicker() => emit(HotelSearchNavigatorState.guestPicker);
   void showDatePicker() => emit(HotelSearchNavigatorState.datepicker);
   void showDefaultView() => emit(HotelSearchNavigatorState.defaultView);
+  void showHotelListView() => emit(HotelSearchNavigatorState.hotelListView);
 }
