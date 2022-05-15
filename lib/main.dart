@@ -17,18 +17,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Guestay',
-      theme: mainThemeData,
-      home: MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider(create: (context) => AuthRepository()),
-          RepositoryProvider(create: (context) => HotelSearchRepository()),
-        ],
-        child: BlocProvider(
-          create: (context) =>
-              SessionCubit(authRepository: context.read<AuthRepository>()),
-          child: const AppNavigator(),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.focusedChild?.unfocus();
+        }
+      },
+      child: MaterialApp(
+        title: 'Guestay',
+        theme: mainThemeData,
+        home: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(create: (context) => AuthRepository()),
+            RepositoryProvider(create: (context) => HotelSearchRepository()),
+          ],
+          child: BlocProvider(
+            create: (context) =>
+                SessionCubit(authRepository: context.read<AuthRepository>()),
+            child: const AppNavigator(),
+          ),
         ),
       ),
     );

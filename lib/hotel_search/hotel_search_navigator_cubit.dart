@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guestay/date_picker/date_picker_cubit.dart';
 import 'package:guestay/hotel_search/hotel_search_repository.dart';
 
+import '../guest_picker/chosen_guests.dart';
+
 enum HotelSearchNavigatorState {
   defaultView,
   guestPicker,
@@ -24,10 +26,8 @@ class HotelSearchNavigatorCubit extends Cubit<HotelSearchNavigatorState> {
   }
 
   void confirmChosenGuests(int adults, int children, int pets, int infants) {
-    hotelSearchRepository.children = children;
-    hotelSearchRepository.adults = adults;
-    hotelSearchRepository.pets = pets;
-    hotelSearchRepository.infants = infants;
+    hotelSearchRepository.setChosenGuests(ChosenGuests(
+        adults: adults, children: children, pets: pets, infants: infants));
     showDefaultView();
   }
 

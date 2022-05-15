@@ -5,6 +5,8 @@ import 'package:guestay/shared/constants/background.dart';
 
 import '../shared/constants/colours.dart';
 import '../shared/divider.dart';
+import '../shared/utils.dart';
+import 'hotel_list_navigator_cubit.dart';
 
 final List<String> hotels = [
   'Bohema Boutique Hotel & Spa',
@@ -23,7 +25,7 @@ class HotelListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: Container(
         decoration: backgroundDecoration,
         width: 1000,
@@ -34,8 +36,10 @@ class HotelListView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _chosenOptionsTile(context),
+              SizedBox(height: 5),
+              _filtersButton(context),
               SizedBox(height: 20),
-              SizedBox(height: 600, child: hotelBuilder),
+              SizedBox(height: 500, child: hotelBuilder),
             ],
           ),
         ),
@@ -95,57 +99,31 @@ class HotelListView extends StatelessWidget {
       color: primaryColor,
       width: 500,
       height: 50,
-      child: Column(
-        children: [
-          Text(hotelSearchRepository.destination != null
-              ? hotelSearchRepository.destination!
-              : 'Error'),
-          textFieldDivider,
-          Text(formatDate(hotelSearchRepository))
-        ],
-      ),
+      child: Column(children: [
+        Text(hotelSearchRepository.destination != null
+            ? hotelSearchRepository.destination!
+            : 'Error'),
+        textFieldDivider,
+        Row(
+          children: [
+            Text(formatDate(hotelSearchRepository)),
+            Text(formatGuestNumber(hotelSearchRepository)),
+          ],
+        ),
+      ]),
     );
   }
 
-  String formatDate(HotelSearchRepository hotelSearchRepository) {
-    if (hotelSearchRepository == null ||
-        hotelSearchRepository.startDate == null ||
-        hotelSearchRepository.endDate == null) {
-      return 'No dates were chosen';
-    }
-
-    return '${hotelSearchRepository.startDate?.day} ${formatMonthNumberToString(hotelSearchRepository.startDate?.month)}'
-        ' - ${hotelSearchRepository.endDate?.day} ${formatMonthNumberToString(hotelSearchRepository.endDate?.month)}';
+  Widget _filtersButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        _filtersButtonPressed(context);
+      },
+      child: Text('Filters'),
+    );
   }
 
-  String formatMonthNumberToString(int? number) {
-    switch (number) {
-      case 1:
-        return 'Jan';
-      case 2:
-        return 'Feb';
-      case 3:
-        return 'Mar';
-      case 4:
-        return 'Apr';
-      case 5:
-        return 'May';
-      case 6:
-        return 'Jun';
-      case 7:
-        return 'Jul';
-      case 8:
-        return 'Aug';
-      case 9:
-        return 'Sep';
-      case 10:
-        return 'Oct';
-      case 11:
-        return 'Nov';
-      case 12:
-        return 'Dec';
-      default:
-        return 'Error';
-    }
+  void _filtersButtonPressed(BuildContext context) {
+    context.read<HotelListNavigatorCubit>().showHotelFilters();
   }
 }
