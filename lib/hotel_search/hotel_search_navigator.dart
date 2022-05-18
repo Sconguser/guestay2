@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guestay/guest_picker/guest_picker_view.dart';
+import 'package:guestay/home/home_navigator_cubit.dart';
 import 'package:guestay/hotel_search/hotel_search_repository.dart';
 
 import '../date_picker/date_picker_view.dart';
+import '../hotel_list/hotel_list_navigator.dart';
 import 'hotel_search_navigator_cubit.dart';
 import 'hotel_search_view.dart';
 
@@ -17,7 +19,6 @@ class HotelSearchNavigator extends StatelessWidget {
     return BlocProvider(
         create: (context) => HotelSearchNavigatorCubit(
             hotelSearchRepository: hotelSearchRepository),
-        // hotelSearchRepository: context.read()<HotelSearchRepository>()),
         child:
             BlocBuilder<HotelSearchNavigatorCubit, HotelSearchNavigatorState>(
                 builder: (context, state) {
@@ -33,9 +34,13 @@ class HotelSearchNavigator extends StatelessWidget {
                 MaterialPage(child: DatePickerView()),
 
               /// showdatepicker
+              ///
+              if (state == HotelSearchNavigatorState.hotelListView)
+                MaterialPage(child: HotelListNavigator()),
             ],
             onPopPage: (route, result) {
-              context.read<HotelSearchNavigatorCubit>().showDefaultView();
+              // context.read<HotelSearchNavigatorCubit>().showDefaultView();
+              context.read<HomeNavigatorCubit>().showHome();
               return route.didPop(result);
             },
           );

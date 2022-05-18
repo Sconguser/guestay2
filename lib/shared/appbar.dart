@@ -25,3 +25,39 @@ AppBar gradientAppBar = AppBar(
     )
   ],
 );
+
+Widget defaultAppBar(BuildContext context) {
+  return AppBar(
+    leading: InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Icon(
+        Icons.arrow_back_ios,
+        color: Colors.black54,
+      ),
+    ),
+  );
+}
+
+// class MyDefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
+//   const MyDefaultAppBar({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return AppBar(
+//       leading: InkWell(
+//         onTap: () {
+//           Navigator.pop(context);
+//         },
+//         child: Icon(
+//           Icons.arrow_back_ios,
+//           color: Colors.black54,
+//         ),
+//       ),
+//     );
+//   }
+//
+//   @override
+//   Size get preferredSize => const Size.fromHeight(100);
+// }

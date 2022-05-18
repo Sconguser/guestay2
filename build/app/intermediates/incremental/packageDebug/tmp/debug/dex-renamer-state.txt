@@ -1,4 +1,4 @@
-#Sun Apr 24 22:04:25 CEST 2022
-base.0=C\:\\Users\\Mioszek\\OneDrive\\Pulpit\\FlutterProjekty\\guestay\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Wed May 18 08:40:38 CEST 2022
+base.0=C\:\\Users\\Mioszek\\OneDrive\\Pulpit\\guestay\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

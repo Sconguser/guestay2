@@ -8,7 +8,7 @@ import 'package:guestay/hotel_search/hotel_search_navigator_cubit.dart';
 import 'package:guestay/hotel_search/hotel_search_repository.dart';
 import 'package:guestay/shared/constants/background.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-
+import '../hotel_filters/hotel_filters.dart';
 import '../shared/constants/colours.dart';
 
 class HotelSearchView extends StatelessWidget {
@@ -19,7 +19,17 @@ class HotelSearchView extends StatelessWidget {
     HotelSearchRepository hotelSearchRepository =
         context.read<HotelSearchRepository>();
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black54,
+          ),
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.all(30),
         decoration: loginBackGroundDecoration,
@@ -35,8 +45,10 @@ class HotelSearchView extends StatelessWidget {
             _pickedDates(context),
             SizedBox(height: 20),
             _pickedGuests(context),
-            SizedBox(height: 100),
-            _debugButton(context)
+            // SizedBox(height: 100),
+            // _debugButton(context),
+            SizedBox(height: 20),
+            _hotelViewButton(context),
           ],
         ),
       ),
@@ -140,7 +152,7 @@ class HotelSearchView extends StatelessWidget {
             onPressed: () {
               print(hotelSearchRepository.startDate);
               print(hotelSearchRepository.endDate);
-              print(hotelSearchRepository.adults);
+              print(hotelSearchRepository.chosenGuests?.adults);
             },
             child: Text(
               'Debug',
@@ -169,21 +181,51 @@ class HotelSearchView extends StatelessWidget {
     }
   }
 
+  Widget _hotelViewButton(BuildContext context) {
+    HotelSearchRepository hotelSearchRepository =
+        context.read<HotelSearchRepository>();
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: SizedBox(
+        width: 400,
+        height: 50,
+        child: ElevatedButton(
+            style:
+                ElevatedButton.styleFrom(primary: primaryColor, elevation: 0),
+            onPressed: () {
+              _hotelViewButtonPressed(context);
+            },
+            child: Text(
+              'Search',
+              style: TextStyle(color: Colors.black),
+            )),
+      ),
+    );
+  }
+
+  void _hotelViewButtonPressed(BuildContext context) {
+    context.read<HotelSearchNavigatorCubit>().showHotelListView();
+  }
+
   Widget _pickedGuests(BuildContext context) {
     HotelSearchRepository hotelSearchRepository =
         context.read<HotelSearchRepository>();
-    if (hotelSearchRepository.adults != null &&
-        hotelSearchRepository.children != null &&
-        hotelSearchRepository.infants != null &&
-        hotelSearchRepository.pets != null) {
+    if (hotelSearchRepository.chosenGuests?.adults != null &&
+        hotelSearchRepository.chosenGuests?.children != null &&
+        hotelSearchRepository.chosenGuests?.infants != null &&
+        hotelSearchRepository.chosenGuests?.pets != null) {
       return Visibility(
         visible: true,
         child: Column(
           children: [
-            Text('Adults: ${hotelSearchRepository.adults.toString()}'),
-            Text('Children: ${hotelSearchRepository.children.toString()}'),
-            Text('Infants: ${hotelSearchRepository.infants.toString()}'),
-            Text('Pets: ${hotelSearchRepository.pets.toString()}'),
+            Text(
+                'Adults: ${hotelSearchRepository.chosenGuests?.adults.toString()}'),
+            Text(
+                'Children: ${hotelSearchRepository.chosenGuests?.children.toString()}'),
+            Text(
+                'Infants: ${hotelSearchRepository.chosenGuests?.infants.toString()}'),
+            Text(
+                'Pets: ${hotelSearchRepository.chosenGuests?.pets.toString()}'),
           ],
         ),
       );

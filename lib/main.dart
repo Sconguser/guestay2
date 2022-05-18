@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guestay/auth/auth_repository.dart';
 import 'package:guestay/hotel_search/hotel_search_repository.dart';
+import 'package:guestay/room_list/room_repository.dart';
 import 'package:guestay/session_cubit.dart';
 
 import 'app_navigator.dart';
@@ -17,18 +18,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Guestay',
-      theme: mainThemeData,
-      home: MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider(create: (context) => AuthRepository()),
-          RepositoryProvider(create: (context) => HotelSearchRepository()),
-        ],
-        child: BlocProvider(
-          create: (context) =>
-              SessionCubit(authRepository: context.read<AuthRepository>()),
-          child: const AppNavigator(),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.focusedChild?.unfocus();
+        }
+      },
+      child: MaterialApp(
+        title: 'Guestay',
+        theme: mainThemeData,
+        home: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(create: (context) => AuthRepository()),
+            RepositoryProvider(create: (context) => HotelSearchRepository()),
+            // RepositoryProvider(create: (context) => RoomRepository()),
+          ],
+          child: BlocProvider(
+            create: (context) =>
+                SessionCubit(authRepository: context.read<AuthRepository>()),
+            child: const AppNavigator(),
+          ),
         ),
       ),
     );
