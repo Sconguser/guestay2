@@ -3,10 +3,7 @@ import 'package:guestay/hotel_search/hotel_search_repository.dart';
 
 import '../hotel_filters/hotel_filters.dart';
 
-enum HotelListNavigatorState {
-  defaultView,
-  hotelFilters,
-}
+enum HotelListNavigatorState { defaultView, hotelFilters, roomList }
 
 class HotelListNavigatorCubit extends Cubit<HotelListNavigatorState> {
   final HotelSearchRepository hotelSearchRepository;
@@ -45,6 +42,15 @@ class HotelListNavigatorCubit extends Cubit<HotelListNavigatorState> {
     showDefaultView();
   }
 
+  void confirmSelectedHotel(String? selectedHotel) {
+    if (selectedHotel == null) {
+      return;
+    }
+    hotelSearchRepository.setSelectedHotel(selectedHotel);
+    showRoomList();
+  }
+
   void showDefaultView() => emit(HotelListNavigatorState.defaultView);
   void showHotelFilters() => emit(HotelListNavigatorState.hotelFilters);
+  void showRoomList() => emit(HotelListNavigatorState.roomList);
 }

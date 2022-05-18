@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guestay/hotel_filters/hotel_filters_view.dart';
+import 'package:guestay/room_list/room_list_navigator.dart';
 
+import '../hotel_search/hotel_search_navigator_cubit.dart';
 import '../hotel_search/hotel_search_repository.dart';
 import 'hotel_list_navigator_cubit.dart';
 import 'hotel_list_view.dart';
@@ -23,9 +25,11 @@ class HotelListNavigator extends StatelessWidget {
               MaterialPage(child: HotelListView()),
               if (state == HotelListNavigatorState.hotelFilters)
                 MaterialPage(child: HotelFiltersView()),
+              if (state == HotelListNavigatorState.roomList)
+                MaterialPage(child: RoomListNavigator()),
             ],
             onPopPage: (route, result) {
-              context.read<HotelListNavigatorCubit>().showDefaultView();
+              context.read<HotelSearchNavigatorCubit>().showDefaultView();
               return route.didPop(result);
             },
           );

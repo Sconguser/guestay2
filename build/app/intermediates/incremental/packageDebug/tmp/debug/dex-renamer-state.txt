@@ -1,4 +1,4 @@
-#Sun May 15 21:56:09 CEST 2022
+#Wed May 18 08:40:38 CEST 2022
 base.0=C\:\\Users\\Mioszek\\OneDrive\\Pulpit\\guestay\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

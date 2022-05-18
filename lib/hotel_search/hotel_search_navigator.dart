@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guestay/guest_picker/guest_picker_view.dart';
+import 'package:guestay/home/home_navigator_cubit.dart';
 import 'package:guestay/hotel_search/hotel_search_repository.dart';
 
 import '../date_picker/date_picker_view.dart';
@@ -38,7 +39,8 @@ class HotelSearchNavigator extends StatelessWidget {
                 MaterialPage(child: HotelListNavigator()),
             ],
             onPopPage: (route, result) {
-              context.read<HotelSearchNavigatorCubit>().showDefaultView();
+              // context.read<HotelSearchNavigatorCubit>().showDefaultView();
+              context.read<HomeNavigatorCubit>().showHome();
               return route.didPop(result);
             },
           );

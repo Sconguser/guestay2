@@ -27,6 +27,17 @@ class HotelFiltersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black54,
+          ),
+        ),
+      ),
       body: BlocProvider(
         create: (context) => HotelFiltersBloc(),
         child: Container(

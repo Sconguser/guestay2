@@ -19,7 +19,17 @@ class HotelSearchView extends StatelessWidget {
     HotelSearchRepository hotelSearchRepository =
         context.read<HotelSearchRepository>();
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black54,
+          ),
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.all(30),
         decoration: loginBackGroundDecoration,

@@ -25,7 +25,17 @@ class HotelListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black54,
+          ),
+        ),
+      ),
       body: Container(
         decoration: backgroundDecoration,
         width: 1000,
@@ -52,44 +62,46 @@ class HotelListView extends StatelessWidget {
     shrinkWrap: true,
     scrollDirection: Axis.vertical,
     itemCount: hotels.length,
-    itemBuilder: (BuildContext context, int index) =>
-        Stack(alignment: Alignment.bottomCenter, children: [
-      InkWell(
-        onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('You chose ${hotels.elementAt(index)}'),
-          ));
-          // context.read<HotelSearchRepository>().destination =
-          //     destinations.elementAt(index);
-          // context.read<HomeNavigatorCubit>().showHotelSearch();
-        },
-        child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-            child: Center(
-                child: Image.asset(
-              'assets/images/${hotels.elementAt(index).toLowerCase()}.jpg',
-              // width: 150,
-              // height: 300,
-            ))),
-      ),
-      ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          width: 100,
-          height: 30,
-          child: Material(
-            elevation: 30,
-            child: Center(
-              child: Text(
-                hotels.elementAt(index),
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black),
+    itemBuilder: (BuildContext context, int index) => Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        InkWell(
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('You chose ${hotels.elementAt(index)}'),
+            ));
+            context
+                .read<HotelListNavigatorCubit>()
+                .confirmSelectedHotel(hotels.elementAt(index));
+          },
+          child: Container(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              child: Center(
+                  child: Image.asset(
+                'assets/images/${hotels.elementAt(index).toLowerCase()}.jpg',
+                // width: 150,
+                // height: 300,
+              ))),
+        ),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: 100,
+            height: 30,
+            child: Material(
+              elevation: 30,
+              child: Center(
+                child: Text(
+                  hotels.elementAt(index),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
           ),
         ),
-      ),
-    ]),
+      ],
+    ),
   );
 
   Widget _chosenOptionsTile(BuildContext context) {
@@ -99,18 +111,20 @@ class HotelListView extends StatelessWidget {
       color: primaryColor,
       width: 500,
       height: 50,
-      child: Column(children: [
-        Text(hotelSearchRepository.destination != null
-            ? hotelSearchRepository.destination!
-            : 'Error'),
-        textFieldDivider,
-        Row(
-          children: [
-            Text(formatDate(hotelSearchRepository)),
-            Text(formatGuestNumber(hotelSearchRepository)),
-          ],
-        ),
-      ]),
+      child: Column(
+        children: [
+          Text(hotelSearchRepository.destination != null
+              ? hotelSearchRepository.destination!
+              : 'Error'),
+          textFieldDivider,
+          Row(
+            children: [
+              Text(formatDate(hotelSearchRepository)),
+              Text(formatGuestNumber(hotelSearchRepository)),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
